@@ -43,7 +43,11 @@ const Courses = () => {
     console.log("Component has rendered.");
     const getProducts = async () => {
       const response = await axios.get("/api/products");
-      setProducts(response.data);
+      const filteredProducts = response.data.filter((e: any) =>
+        isDateOlder(e.product.metadata.Datum, e.product.metadata.Uhrzeit)
+      );
+      console.log(filteredProducts);
+      setProducts(filteredProducts);
     };
     getProducts();
   }, []);
@@ -177,8 +181,7 @@ const Courses = () => {
                   <CardFooter>
                     {!e.product.metadata.Datum ||
                     !e.product.metadata.Uhrzeit ||
-                    !e.product.metadata.Zoom ||
-                    isDateOlder(e.product.metadata.Datum) ? (
+                    !e.product.metadata.Zoom ? (
                       <Button className="w-full" variant="destructive" disabled>
                         Nicht (mehr) buchbar
                       </Button>
