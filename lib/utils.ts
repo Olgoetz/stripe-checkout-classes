@@ -5,6 +5,16 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function checkHasProperties(obj: any, properties: string[]) {
+  let missingProperties: string[] = [];
+  properties.forEach((property) => {
+    if (!obj.hasOwnProperty(property)) {
+      missingProperties.push(property);
+    }
+  });
+  return missingProperties;
+}
+
 export function isDateOlder(dateString: string, timeString: string) {
   // Split the date string into an array [day, month, year]
   const dateArray = dateString.split(".");

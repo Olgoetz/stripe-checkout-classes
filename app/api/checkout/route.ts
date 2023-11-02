@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
 
-import Stripe from "stripe";
+import stripe from "@/lib/get-stripe";
 
-const stripe = new Stripe(process.env.STRIPE_API_SECRET_KEY!, {
-  typescript: true,
-  apiVersion: "2023-08-16",
-});
 export async function POST(req: Request, res: Response) {
   const result = await req.json();
 
@@ -18,7 +14,7 @@ export async function POST(req: Request, res: Response) {
       invoice_creation: {
         enabled: true,
       },
-
+      customer_creation: "if_required",
       line_items: [
         {
           // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
@@ -39,16 +35,21 @@ export async function POST(req: Request, res: Response) {
         },
       ],
       mode: "payment",
+      automatic_tax: {
+        enabled: true,
+      },
       billing_address_collection: "required",
       payment_method_types: ["card", "paypal"],
 
-      success_url: `${req.headers.get("origin")}/session/{CHECKOUT_SESSION_ID}`,
+      success_url: `${req.headers.get(
+        "origin"
+      )}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}`,
     });
     // console.log(session);
-    return NextResponse.json(session.id, { status: 200 });
+    return NextResponse.json({ session_id: session.id }, { status: 200 });
   } catch (err) {
     console.error("[CHECKOUT_ERROR]", err);
-    return new NextResponse("Internal Error", { status: 500 });
+    return NextResponse.json("Internal Error", { status: 500 });
   }
 }
