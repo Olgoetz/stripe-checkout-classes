@@ -5,6 +5,7 @@ export async function fulFillOrder(invoice_id: string) {
   console.log("[FULFILLORDER] Invoice ID:", invoice_id);
   try {
     // Create invoice
+    console.log("[FULFILLORDER] ghere:");
     const invoice = await stripe.invoices.sendInvoice(invoice_id);
 
     // Check if invoice was successfully paid
@@ -22,7 +23,7 @@ export async function fulFillOrder(invoice_id: string) {
     const date = product.metadata.Datum;
     const time = product.metadata.Uhrzeit;
     const zoom = product.metadata.Zoom;
-
+    console.log("[FULFILLORDER] Product:", name, date, time, zoom);
     sendEmail(
       invoice.customer_name!,
       invoice.customer_email!,
@@ -32,8 +33,6 @@ export async function fulFillOrder(invoice_id: string) {
       zoom,
       invoice.hosted_invoice_url!
     );
-
-    return true;
   } catch (err) {
     console.log("[FULFILLORDER_ERROR]", err);
     console.error("[FULFILLORDER_ERROR", err);
