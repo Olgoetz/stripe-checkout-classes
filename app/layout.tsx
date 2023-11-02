@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-
+export { useReportWebVitals } from "next-axiom";
 const montserrat = Montserrat({
   weight: "400",
   subsets: ["latin"],

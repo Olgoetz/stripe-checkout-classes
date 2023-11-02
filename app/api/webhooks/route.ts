@@ -41,10 +41,10 @@ export async function POST(req: Request) {
       switch (event.type) {
         case "checkout.session.completed":
           data = event.data.object as Stripe.Checkout.Session;
+          console.log(`💰 CheckoutSession status: ${data.payment_status}`);
           if (data.payment_status === "paid") {
             fulFillOrder(data.invoice as string);
           }
-          console.log(`💰 CheckoutSession status: ${data.payment_status}`);
           break;
         case "payment_intent.payment_failed":
           data = event.data.object as Stripe.PaymentIntent;
@@ -100,9 +100,9 @@ async function fulFillOrder(invoice_id: string) {
       invoice.hosted_invoice_url!
     );
 
-    return NextResponse.json("FulfillOrder successful", { status: 200 });
+    return true;
   } catch (err) {
     console.error("[FULLFILLORDER_ERROR", err);
-    return NextResponse.json("Internal error", { status: 500 });
+    return false;
   }
 }

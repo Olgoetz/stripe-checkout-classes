@@ -6,6 +6,10 @@ variable "STRIPE_API_SECRET_KEY" {
   type      = string
   sensitive = true
 }
+variable "STRIPE_WEBHOOK_SECRET" {
+  type      = string
+  sensitive = true
+}
 variable "SENDGRID_API_KEY" {
   type      = string
   sensitive = true

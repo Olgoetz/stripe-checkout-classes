@@ -1,7 +1,6 @@
 import sgMail from "@sendgrid/mail";
-import { NextResponse } from "next/server";
 import { USER } from "./config";
-
+import { log } from "next-axiom";
 const initSendGrid = process.env.SENDGRID_API_KEY as string;
 sgMail.setApiKey(initSendGrid);
 
@@ -15,7 +14,7 @@ export async function sendEmail(
   invoice_url: string
 ) {
   if (!initSendGrid) {
-    return NextResponse.json("Sendgrid API Key not set", { status: 401 });
+    throw new Error("Sendgrid API Key not set");
   }
 
   const htmlString = `
@@ -78,9 +77,11 @@ export async function sendEmail(
     // ],
   };
   try {
+    log.info("Sending email to " + customer_email);
+    console.log("Sending email to " + customer_email);
     await sgMail.send(msg);
   } catch (err) {
     console.log("[SENDEMAIL_ERROR]", err);
-    return NextResponse.json("Internal Error", { status: 500 });
+    return false;
   }
 }

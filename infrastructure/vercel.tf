@@ -40,3 +40,9 @@ resource "vercel_project_environment_variable" "url" {
   value      = var.URL
   target     = ["production", "development"]
 }
+resource "vercel_project_environment_variable" "stripe_webhook_secret" {
+  project_id = vercel_project.this.id
+  key        = "STRIPE_WEBHOOK_SECRET"
+  value      = var.STRIPE_WEBHOOK_SECRET
+  target     = ["production", "development"]
+}
