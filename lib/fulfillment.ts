@@ -35,6 +35,7 @@ export async function fulFillOrder(invoice_id: string) {
 
     return true;
   } catch (err) {
+    console.log("[FULFILLORDER_ERROR]", err);
     console.error("[FULFILLORDER_ERROR", err);
     return false;
   }
