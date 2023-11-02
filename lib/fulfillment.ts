@@ -2,10 +2,10 @@ import stripe from "./get-stripe";
 import { sendEmail } from "./sendEmail";
 
 export async function fulFillOrder(invoice_id: string) {
-  console.log("🔔 Fulfilling order");
   try {
     // Create invoice
     const invoice = await stripe.invoices.sendInvoice(invoice_id);
+    console.log("[FULFILLORDER] Invoice ID:", invoice_id);
 
     // Check if invoice was successfully paid
     const isPaid: boolean = invoice.paid;
