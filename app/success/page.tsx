@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-
+import { Suspense } from "react";
 import { CheckCircle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
@@ -34,22 +34,24 @@ const Page = () => {
   //   getFulfillmentObject();
   // }, []);
   return (
-    <div className="container flex flex-col items-center justify-center min-h-screen text-center space-y-8">
-      <div className="flex items-center justify-center">
-        <CheckCircle size={50} color="green" className="mr-5" />
-        <h1 className="text-2xl">Deine Zahlung war erfolgreich!</h1>
-      </div>
+    <Suspense>
+      <div className="container flex flex-col items-center justify-center min-h-screen text-center space-y-8">
+        <div className="flex items-center justify-center">
+          <CheckCircle size={50} color="green" className="mr-5" />
+          <h1 className="text-2xl">Deine Zahlung war erfolgreich!</h1>
+        </div>
 
-      <p>
-        Soeben wurde eine Email an dich mit den Login-Daten und deiner Rechnung
-        verschickt!
-      </p>
-      <div className="mt-8">
-        <Link href="/" className="text-gray-500">
-          Zurück zum Angebot
-        </Link>
+        <p>
+          Soeben wurde eine Email an dich mit den Login-Daten und deiner
+          Rechnung verschickt!
+        </p>
+        <div className="mt-8">
+          <Link href="/" className="text-gray-500">
+            Zurück zum Angebot
+          </Link>
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 
   // if (error) {
