@@ -10,7 +10,7 @@ export async function fulFillOrder(invoice_id: string) {
 
     // Check if invoice was successfully paid
     const isPaid: boolean = invoice.paid;
-
+    console.log("[FULFILLORDER] isPaid:", isPaid);
     if (!isPaid) {
       throw new Error("Payment failed");
     }
@@ -35,7 +35,7 @@ export async function fulFillOrder(invoice_id: string) {
     );
   } catch (err) {
     console.log("[FULFILLORDER_ERROR]", err);
-    console.error("[FULFILLORDER_ERROR", err);
+
     return false;
   }
 }
