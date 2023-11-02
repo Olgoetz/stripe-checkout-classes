@@ -3,7 +3,7 @@ import type { Stripe } from "stripe";
 import { NextResponse } from "next/server";
 
 import stripe from "@/lib/get-stripe";
-import { sendEmail } from "@/lib/sendEmail";
+import { fulFillOrder } from "@/lib/fulfillment";
 
 export async function POST(req: Request) {
   let event: Stripe.Event;
@@ -68,42 +68,4 @@ export async function POST(req: Request) {
   }
   // Return a response to acknowledge receipt of the event.
   return NextResponse.json({ message: "Received" }, { status: 200 });
-}
-
-async function fulFillOrder(invoice_id: string) {
-  try {
-    // Create invoice
-    const invoice = await stripe.invoices.sendInvoice(invoice_id);
-
-    // Check if invoice was successfully paid
-    const isPaid: boolean = invoice.paid;
-
-    if (!isPaid) {
-      return NextResponse.json("Payment failed", { status: 500 });
-    }
-
-    // Get product information
-    const productId = invoice.lines.data[0].price?.product as string;
-    const product = await stripe.products.retrieve(productId);
-
-    const name = product.name;
-    const date = product.metadata.Datum;
-    const time = product.metadata.Uhrzeit;
-    const zoom = product.metadata.Zoom;
-
-    sendEmail(
-      invoice.customer_name!,
-      invoice.customer_email!,
-      name,
-      date,
-      time,
-      zoom,
-      invoice.hosted_invoice_url!
-    );
-
-    return true;
-  } catch (err) {
-    console.error("[FULLFILLORDER_ERROR", err);
-    return false;
-  }
 }
