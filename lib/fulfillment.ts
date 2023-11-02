@@ -2,6 +2,7 @@ import stripe from "./get-stripe";
 import { sendEmail } from "./sendEmail";
 
 export async function fulFillOrder(invoice_id: string) {
+  console.log("🔔 Fulfilling order");
   try {
     // Create invoice
     const invoice = await stripe.invoices.sendInvoice(invoice_id);
