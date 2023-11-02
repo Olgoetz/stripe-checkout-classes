@@ -5,9 +5,9 @@ export async function fulFillOrder(invoice_id: string) {
   console.log("[FULFILLORDER] Invoice ID:", invoice_id);
   try {
     // Create invoice
-    console.log("[FULFILLORDER] ghere:");
-    const invoice = await stripe.invoices.sendInvoice(invoice_id);
 
+    const invoice = await stripe.invoices.sendInvoice(invoice_id);
+    console.log("[FULFILLORDER] Invoice:", invoice);
     // Check if invoice was successfully paid
     const isPaid: boolean = invoice.paid;
     console.log("[FULFILLORDER] isPaid:", isPaid);
