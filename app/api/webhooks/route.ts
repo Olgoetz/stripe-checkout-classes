@@ -44,7 +44,7 @@ export async function POST(req: Request) {
           console.log(`💰 CheckoutSession status: ${data.payment_status}`);
           if (data.payment_status === "paid") {
             console.log("🔔 Fulfilling order");
-            fulFillOrder(data.invoice as string);
+            await fulFillOrder(data.invoice as string);
           }
           break;
         case "payment_intent.payment_failed":
