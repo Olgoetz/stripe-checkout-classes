@@ -169,7 +169,7 @@ const Courses = () => {
                     <CardTitle>{e.product.name}</CardTitle>
                     {/* <CardDescription>Card Description</CardDescription> */}
                   </CardHeader>
-                  <CardContent className="space-y-3">
+                  <CardContent className="space-y-3 ">
                     <div className="flex">
                       <Calendar className="mr-5" />
 
