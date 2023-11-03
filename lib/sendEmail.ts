@@ -82,6 +82,7 @@ export async function sendEmail(
 
     await sgMail.send(msg);
     console.log("[SENDEMAIL_SUCCESS]", `Email sent to  ${customer_email}`);
+    return true;
   } catch (err) {
     console.log("[SENDEMAIL_ERROR]", err);
     return false;

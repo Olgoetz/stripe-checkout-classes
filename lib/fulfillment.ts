@@ -24,7 +24,7 @@ export async function fulFillOrder(invoice_id: string) {
     const time = product.metadata.Uhrzeit;
     const zoom = product.metadata.Zoom;
     console.log("[FULFILLORDER] Product:", name, date, time, zoom);
-    await sendEmail(
+    const result = await sendEmail(
       invoice.customer_name!,
       invoice.customer_email!,
       name,
@@ -33,6 +33,7 @@ export async function fulFillOrder(invoice_id: string) {
       zoom,
       invoice.hosted_invoice_url!
     );
+    return result;
   } catch (err) {
     console.log("[FULFILLORDER_ERROR]");
     console.log("[FULFILLORDER_ERROR]", err);
