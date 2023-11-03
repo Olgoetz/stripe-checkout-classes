@@ -33,6 +33,7 @@ export async function fulFillOrder(invoice_id: string) {
       zoom,
       invoice.hosted_invoice_url!
     );
+    console.log("[FULFILLORDER] Email sent:", result);
     return result;
   } catch (err) {
     console.log("[FULFILLORDER_ERROR]");
